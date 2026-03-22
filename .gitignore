@@ -1,0 +1,16 @@
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# Root Node Modules (if any stray installs happened)
+node_modules/
+package-lock.json
+npm-debug.log
+
+# Mac/Windows OS files
+.DS_Store
+Thumbs.db
+
+# Orphaned directories from early scripts
+/nest-backend/
