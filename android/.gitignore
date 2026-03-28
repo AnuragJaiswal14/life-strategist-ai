@@ -16,3 +16,4 @@ local.properties
 
 # Module specific build folders
 /app/build/
+/app/google-services.json
