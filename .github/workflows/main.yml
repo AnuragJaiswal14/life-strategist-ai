@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: npm i
       - name: Generate Prisma Client
-        run: npx prisma generate
+        run: npx prisma generate --schema=backend/nest-backend/src/prisma/schema.prisma
       - name: Build Backend
         run: npm run build
       - name: Run Unit Tests
