@@ -20,6 +20,8 @@ jobs:
           node-version: '20.x'
       - name: Install dependencies
         run: npm i
+      - name: List files for debugging
+        run: ls -R
       - name: Generate Prisma Client
         run: npx prisma generate --schema=./backend/nest-backend/src/prisma/schema.prisma
       - name: Build Backend
