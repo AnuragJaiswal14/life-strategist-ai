@@ -8,6 +8,7 @@ import com.aistrategist.app.presentation.dashboard.DashboardScreen
 import com.aistrategist.app.presentation.log.LogScreen
 import com.aistrategist.app.presentation.report.ReportScreen
 import com.aistrategist.app.presentation.login.LoginScreen
+import com.aistrategist.app.presentation.profile.ProfileScreen
 
 @Composable
 fun AiStrategistNavGraph(navController: NavHostController) {
@@ -27,7 +28,8 @@ fun AiStrategistNavGraph(navController: NavHostController) {
         composable(route = Screen.Dashboard.route) {
             DashboardScreen(
                 onNavigateToLog = { navController.navigate(Screen.Log.route) },
-                onNavigateToReport = { navController.navigate(Screen.Report.route) }
+                onNavigateToReport = { navController.navigate(Screen.Report.route) },
+                onNavigateToProfile = { navController.navigate(Screen.Profile.route) }
             )
         }
         composable(route = Screen.Log.route) {
@@ -38,6 +40,16 @@ fun AiStrategistNavGraph(navController: NavHostController) {
         composable(route = Screen.Report.route) {
             ReportScreen(
                 onBack = { navController.popBackStack() }
+            )
+        }
+        composable(route = Screen.Profile.route) {
+            ProfileScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onLogoutSuccess = {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(navController.graph.id) { inclusive = true }
+                    }
+                }
             )
         }
     }

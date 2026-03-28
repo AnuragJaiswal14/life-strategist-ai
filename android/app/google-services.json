@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "811375555024",
+    "project_id": "aistrategist-c37e1",
+    "storage_bucket": "aistrategist-c37e1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811375555024:android:28fbdd65d6b756066e09d5",
+        "android_client_info": {
+          "package_name": "com.aistrategist.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0C8PPsgO-2PQi7HFxiQkvSn2JsM3Q9MA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
