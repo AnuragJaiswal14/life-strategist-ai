@@ -7,6 +7,9 @@ import com.aistrategist.app.domain.model.DailyLog
 import com.aistrategist.app.domain.repository.LogRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import com.aistrategist.app.data.remote.dto.ChatMessageDto
+import com.aistrategist.app.data.remote.dto.ChatRequestDto
+import com.aistrategist.app.data.remote.dto.ChatResponseDto
 import javax.inject.Inject
 
 class LogRepositoryImpl @Inject constructor(
@@ -34,6 +37,16 @@ class LogRepositoryImpl @Inject constructor(
             ))
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    override suspend fun sendChatMessage(messages: List<ChatMessageDto>): Result<ChatResponseDto> {
+        return try {
+            val response = apiService.sendChatMessage(ChatRequestDto(messages))
+            Result.success(response)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
         }
     }
 }

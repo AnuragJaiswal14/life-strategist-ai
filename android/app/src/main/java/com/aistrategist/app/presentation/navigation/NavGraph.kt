@@ -5,8 +5,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.aistrategist.app.presentation.dashboard.DashboardScreen
-import com.aistrategist.app.presentation.log.LogScreen
-import com.aistrategist.app.presentation.report.ReportScreen
+import com.aistrategist.app.presentation.chat.PulseScreen
+import com.aistrategist.app.presentation.report.ReportScreen // Used as Strategy
+import com.aistrategist.app.presentation.audit.AuditScreen
 import com.aistrategist.app.presentation.login.LoginScreen
 import com.aistrategist.app.presentation.profile.ProfileScreen
 
@@ -19,7 +20,7 @@ fun AiStrategistNavGraph(navController: NavHostController) {
         composable(route = Screen.Login.route) {
             LoginScreen(
                 onLoginSuccess = { 
-                    navController.navigate(Screen.Dashboard.route) {
+                    navController.navigate(Screen.Pulse.route) {
                         popUpTo(Screen.Login.route) { inclusive = true }
                     }
                 }
@@ -27,17 +28,23 @@ fun AiStrategistNavGraph(navController: NavHostController) {
         }
         composable(route = Screen.Dashboard.route) {
             DashboardScreen(
-                onNavigateToLog = { navController.navigate(Screen.Log.route) },
-                onNavigateToReport = { navController.navigate(Screen.Report.route) },
+                onNavigateToLog = { navController.navigate(Screen.Pulse.route) },
+                onNavigateToAudit = { navController.navigate(Screen.Audit.route) },
                 onNavigateToProfile = { navController.navigate(Screen.Profile.route) }
             )
         }
-        composable(route = Screen.Log.route) {
-            LogScreen(
-                onBack = { navController.popBackStack() }
+        composable(route = Screen.Pulse.route) {
+            PulseScreen(
+                onNavigateToDashboard = { navController.navigate(Screen.Dashboard.route) }
             )
         }
-        composable(route = Screen.Report.route) {
+        composable(route = Screen.Audit.route) {
+            AuditScreen(
+                onBack = { navController.popBackStack() },
+                onNavigateToStrategy = { navController.navigate(Screen.Strategy.route) }
+            )
+        }
+        composable(route = Screen.Strategy.route) {
             ReportScreen(
                 onBack = { navController.popBackStack() }
             )

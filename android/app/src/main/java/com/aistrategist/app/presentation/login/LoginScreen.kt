@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.sp
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialException
+import androidx.credentials.CustomCredential
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -92,8 +93,11 @@ fun LoginScreen(
                             val result = credentialManager.getCredential(context, request)
                             val credential = result.credential
 
-                            if (credential is GoogleIdTokenCredential) {
-                                viewModel.handleGoogleSignIn(credential.idToken, onLoginSuccess)
+                            if (credential is CustomCredential && credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                                val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
+                                viewModel.handleGoogleSignIn(googleIdTokenCredential.idToken, onLoginSuccess)
+                            } else {
+                                android.widget.Toast.makeText(context, "Unexpected credential type.", android.widget.Toast.LENGTH_SHORT).show()
                             }
                         } catch (e: Exception) {
                             Log.e("Auth", "Login Failed", e)

@@ -1,0 +1,54 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id // Firebase UID
+  name      String
+  email     String   @unique
+  goals     Goal[]
+  logs      DailyLog[]
+  reports   WeeklyReport[]
+  createdAt DateTime @default(now())
+}
+
+model Goal {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  type        String   // "SHORT_TERM", "LONG_TERM"
+  description String
+  createdAt   DateTime @default(now())
+}
+
+model DailyLog {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  date        DateTime @db.Date
+  energyLevel Int      // 1-10
+  timeSpent   Json     // { "work": 4, "social_media": 2, "learning": 1 }
+  habits      Json     // {"exercise": "done", "junk_food": "avoided"}
+  createdAt   DateTime @default(now())
+  
+  @@unique([userId, date])
+}
+
+model WeeklyReport {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  startDate       DateTime @db.Date
+  endDate         DateTime @db.Date
+  summary         String
+  insights        String
+  misalignments   String
+  strategy        String
+  recommendations Json     // Array of actionable steps
+  createdAt       DateTime @default(now())
+}
