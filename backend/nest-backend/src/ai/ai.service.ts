@@ -32,12 +32,21 @@ The JSON must strictly match:
 }
 If you are missing ANY data, just reply conversationally to naturally ask for it.`;
 
-    // Fast-fail Dev Mock (if no API key provided)
+    // Offline AI Fallback Coach (Local Dev Mode)
     if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === 'fake-key') {
-      if (messages.length > 3) {
-        return `{"__LOG_COMPLETE__": true, "energyLevel": 8, "timeSpent": {"dev": 8}, "habits": {"testing": "done"}}`;
+      const userMessageCount = messages.filter(m => m.role === 'user').length;
+      const lastMessage = messages[messages.length - 1]?.content.toLowerCase() || '';
+
+      if (userMessageCount === 1) {
+        return "I see you're checking in. I am running in Offline Local Mode! Let's log your day. On a scale of 1 to 10, how was your energy today?";
+      } else if (userMessageCount === 2) {
+        return "Noted. How did you allocate your time today? (e.g., worked for 4 hours, scrolled for 2)";
+      } else if (userMessageCount === 3) {
+        return "Got it. Finally, what habits did you stick to or break today?";
+      } else {
+        const energy = lastMessage.includes('tired') || lastMessage.includes('low') ? 4 : 8;
+        return `{"__LOG_COMPLETE__": true, "energyLevel": ${energy}, "timeSpent": {"offline_work": 5}, "habits": {"local_testing": "done"}}`;
       }
-      return "I'm running in offline DEV mode! How was your energy today? (Reply a few times to auto-complete)";
     }
 
     try {

@@ -90,6 +90,9 @@ dependencies {
     implementation("com.patrykandpatrick.vico:compose:1.14.0")
     implementation("com.patrykandpatrick.vico:compose-m3:1.14.0")
 
+    // Coil Image Loading
+    implementation("io.coil-kt:coil-compose:2.5.0")
+
     // Tests
     testImplementation("junit:junit:4.13.2")
     testImplementation("io.mockk:mockk:1.13.10")

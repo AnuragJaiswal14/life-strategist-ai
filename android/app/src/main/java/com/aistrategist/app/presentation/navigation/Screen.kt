@@ -5,6 +5,9 @@ sealed class Screen(val route: String) {
     object Dashboard : Screen("dashboard")
     object Pulse : Screen("pulse")
     object Audit : Screen("audit")
-    object Strategy : Screen("strategy")
+    object Strategy : Screen("strategy?appName={appName}") {
+        fun createRoute(appName: String) = "strategy?appName=$appName"
+    }
     object Profile : Screen("profile")
+    object HabitForge : Screen("habit_forge")
 }

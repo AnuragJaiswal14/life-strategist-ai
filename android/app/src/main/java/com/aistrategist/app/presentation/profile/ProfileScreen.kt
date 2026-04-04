@@ -19,6 +19,10 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import android.Manifest
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.foundation.background
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,19 +66,16 @@ fun ProfileScreen(
         ) {
             Spacer(modifier = Modifier.height(32.dp))
             
-            // Avatar Placeholder (since Coil/Glide isn't added for external URLs natively without bulky deps, use Material Icon fallback)
-            Surface(
-                modifier = Modifier.size(120.dp),
-                shape = CircleShape,
-                color = MaterialTheme.colorScheme.primaryContainer
-            ) {
-                Icon(
-                    Icons.Default.Person,
-                    contentDescription = null,
-                    modifier = Modifier.padding(24.dp),
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-            }
+            // Dynamic Google Authentication Avatar
+            AsyncImage(
+                model = user?.photoUrl ?: "https://api.dicebear.com/7.x/bottts/png?seed=fallback",
+                contentDescription = "Profile Avatar",
+                modifier = Modifier
+                    .size(120.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primaryContainer),
+                contentScale = ContentScale.Crop
+            )
             
             Spacer(modifier = Modifier.height(24.dp))
 
